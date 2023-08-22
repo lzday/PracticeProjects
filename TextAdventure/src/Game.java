@@ -1,6 +1,7 @@
 /**
  *
  * @author lzday
+ * tutorial followed: https://youtube.com/playlist?list=PL_QPQmz5C6WUMB0xEMZosWbyQo_Kil0Fb
  */
 
 import javax.swing.JFrame;
