@@ -2,6 +2,7 @@ package lza.dgametut.entity;
 
 import lza.dgametut.entity.Entity;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -22,6 +23,8 @@ public class Player extends Entity{
         
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        
+        solidArea = new Rectangle(8,16,32,32);
         
         setDefaultValues();
         getPlayerImage();
@@ -57,6 +60,41 @@ public class Player extends Entity{
         
         if(keyH.upPressed || keyH.downPressed || 
                 keyH.leftPressed || keyH.rightPressed){ //player only moves when key is pressed
+            if(keyH.upPressed == true){
+                direction = "up";
+            }
+            else if(keyH.downPressed == true){
+                direction = "down";
+            }
+            else if(keyH.leftPressed == true){
+                direction = "left";
+            }
+            else if(keyH.rightPressed == true){
+                direction = "right";
+            }
+            
+            // CHECK THE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+            
+            // IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(collisionOn == false){
+                switch(direction){
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+            
             spriteCounter++;
             if(spriteCounter > 12){ //player image changes every ten frames
                 if(spriteNum == 1)
@@ -66,24 +104,6 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
-        
-        if(keyH.upPressed == true){
-            direction = "up";
-            worldY -= speed;
-        }
-        else if(keyH.downPressed == true){
-            direction = "down";
-            worldY += speed;
-        }
-        else if(keyH.leftPressed == true){
-            direction = "left";
-            worldX -= speed;
-        }
-        else if(keyH.rightPressed == true){
-            direction = "right";
-            worldX += speed;
-        }
-        
     }
     
     public void draw(Graphics2D g){
