@@ -2,10 +2,6 @@ package lza.dgametut;
 
 import javax.swing.JFrame;
 
-/**
- *
- * @author lucyz
- */
 public class Main {
 
     public static void main(String[] args) {

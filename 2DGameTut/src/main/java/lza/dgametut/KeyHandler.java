@@ -3,10 +3,6 @@ package lza.dgametut;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/**
- *
- * @author lucyz
- */
 public class KeyHandler implements KeyListener{
     
     public boolean upPressed, downPressed, leftPressed, rightPressed;
