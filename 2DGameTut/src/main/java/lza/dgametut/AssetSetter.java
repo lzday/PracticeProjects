@@ -1,8 +1,6 @@
 package lza.dgametut;
 
-import lza.dgametut.object.OBJ_Chest;
-import lza.dgametut.object.OBJ_Door;
-import lza.dgametut.object.OBJ_Key;
+import lza.dgametut.object.*;
 
 public class AssetSetter {
     
@@ -40,5 +38,9 @@ public class AssetSetter {
         gp.obj[6] = new OBJ_Chest();
         gp.obj[6].worldX = 10 * gp.tileSize;
         gp.obj[6].worldY = 7 * gp.tileSize;
+        
+        gp.obj[7] = new OBJ_Boots();
+        gp.obj[7].worldX = 37 * gp.tileSize;
+        gp.obj[7].worldY = 42 * gp.tileSize;
     }
 }
