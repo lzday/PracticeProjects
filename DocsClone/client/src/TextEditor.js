@@ -1,6 +1,7 @@
 import { useCallback} from 'react'
 import Quill from "quill";
 import "quill/dist/quill.snow.css"
+import "./styles.css"
 
 export default function TextEditor() {
     const wrapperRef = useCallback((wrapper) => { // creates a text editor inside a container using quill
@@ -11,5 +12,5 @@ export default function TextEditor() {
         wrapper.append(editor) // adds the tool bar to the editor 
         new Quill(editor, {theme: "snow"})
     }, [])
-    return <div id="container" ref={wrapperRef}></div>
+    return <div className="container" ref={wrapperRef}></div>
 }
