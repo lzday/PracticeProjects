@@ -5,6 +5,8 @@ import "./styles.css"
 import {io} from 'socket.io-client'
 import { useParams } from 'react-router-dom';
 
+const SAVE_INTERVAL_MS = 2000
+
 const TOOLBAR_OPTIONS = [
     [{header: [1, 2, 3, 4, 5, 6, false]}],
     [{font:[]}],
@@ -41,6 +43,17 @@ export default function TextEditor() {
         })
         socket.emit('get-document', documentId)
     }, [socket, quill, documentId])
+
+    useEffect(() => {
+        if(socket==null || quill==null) return
+
+        const interval = setInterval(() => { // saves document every SAVE_INTERVAL_MS (currently 2s)
+            socket.emit('save-document', quill.getContents())
+            return() =>{
+                clearInterval(interval)
+            }
+        }, SAVE_INTERVAL_MS)
+    }, [socket, quill])
 
     useEffect(()=>{ //receive changes from other users
         if(socket==null || quill==null) return // make sure socket and quill exist
