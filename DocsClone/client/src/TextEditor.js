@@ -3,6 +3,7 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css"
 import "./styles.css"
 import {io} from 'socket.io-client'
+import { useParams } from 'react-router-dom';
 
 const TOOLBAR_OPTIONS = [
     [{header: [1, 2, 3, 4, 5, 6, false]}],
@@ -18,6 +19,7 @@ const TOOLBAR_OPTIONS = [
 
 export default function TextEditor() {
     // so that there isn't multiple different variable names
+    const {id: documentId} = useParams()
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
 
@@ -29,6 +31,16 @@ export default function TextEditor() {
             s.disconnect()
         }
     }, [])
+
+    useEffect(() => {
+        if(socket==null || quill==null) return
+
+        socket.once("load-document", document =>{
+            quill.setContents(document)
+            quill.enable() // disable text editor until document is loaded
+        })
+        socket.emit('get-document', documentId)
+    }, [socket, quill, documentId])
 
     useEffect(()=>{ //receive changes from other users
         if(socket==null || quill==null) return // make sure socket and quill exist
@@ -62,6 +74,8 @@ export default function TextEditor() {
         const editor = document.createElement('div')
         wrapper.append(editor) // adds the tool bar to the editor 
         const q = new Quill(editor, {theme: "snow", modules: {toolbar: TOOLBAR_OPTIONS}})
+        q.disable()
+        q.setText("Loading...")
         setQuill(q) // quill is set to this quill
     }, [])
     return <div className="container" ref={wrapperRef}></div>
