@@ -2,7 +2,6 @@ package lza.dgametut.tile;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
@@ -13,7 +12,7 @@ public class TileManager {
     
     GamePanel gp;
     public Tile[] tile;
-    public int mapTileNum[][];
+    public int[][] mapTileNum;
     
     public TileManager(GamePanel gp){
         this.gp = gp;
@@ -77,7 +76,7 @@ public class TileManager {
 
         try{
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName+".png"));
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
             tile[index].image = uTool.scaledImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index].collision = collision;
         }catch(Exception e){
@@ -99,7 +98,7 @@ public class TileManager {
                 String line = br.readLine();
                 
                 while(col < gp.maxWorldCol){
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
                     
                     int num = Integer.parseInt(numbers[col]);
                     
