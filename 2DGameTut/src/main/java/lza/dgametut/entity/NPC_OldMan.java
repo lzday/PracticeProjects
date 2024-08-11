@@ -59,5 +59,20 @@ public class NPC_OldMan extends Entity{
         }
         gp.ui.currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++;
+        // change sprite to look like talking to player
+        switch (gp.player.direction){
+            case "up":
+                direction = "down";
+                break;
+            case "down":
+                direction = "up";
+                break;
+            case "left":
+                direction = "right";
+                break;
+            case "right":
+                direction = "left";
+                break;
+        }
     }
 }
