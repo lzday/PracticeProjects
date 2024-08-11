@@ -14,8 +14,8 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished;
-
     public String currentDialogue;
+    public int commandNum = 0;
 
     public UI(GamePanel gp){
         this.gp = gp;
@@ -94,16 +94,22 @@ public class UI {
         x = getXforCenteredText(text);
         y += gp.tileSize*3.5;
         g2.drawString(text, x, y);
+        if(commandNum == 0)
+            g2.drawString(">", x-gp.tileSize, y);
 
         text = "LOAD GAME";
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
+        if(commandNum == 1)
+            g2.drawString(">", x-gp.tileSize, y);
 
         text = "QUIT";
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
+        if(commandNum == 2)
+            g2.drawString(">", x-gp.tileSize, y);
     }
 
     public void drawPauseScreen(){ // all pausing stuff here
