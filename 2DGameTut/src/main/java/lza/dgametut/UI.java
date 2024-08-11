@@ -23,8 +23,8 @@ public class UI {
         try {
             InputStream is = getClass().getResourceAsStream("/font/MaruMonica.ttf");
             maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
-            is = getClass().getResourceAsStream("/font/PurisaB.ttf");
-            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
+            /*is = getClass().getResourceAsStream("/font/PurisaB.ttf");
+            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);*/
         } catch (FontFormatException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -41,12 +41,18 @@ public class UI {
 
     public void draw(Graphics2D g2){
         this.g2 = g2;
-
         g2.setFont(maruMonica);
-        // g2.setFont(purisaB);
-        // g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        /* The following can be used for purisaB to make it look nicer (less jagged):
+         * g2.setFont(purisaB);
+         * g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); */
         g2.setColor(Color.white);
 
+        // TITLE STATE
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
+
+        // PLAY STATE
         if(gp.gameState == gp.playState){
             // do playstate stuff
         }
@@ -56,6 +62,16 @@ public class UI {
         if(gp.gameState == gp.dialogueState){
             drawDialogueScreen();
         }
+    }
+
+    public void drawTitleScreen(){
+        // TITLE NAME
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "Blue Boy Adventure";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize*3;
+        g2.setColor(Color.white);
+        g2.drawString(text, x, y);
     }
 
     public void drawPauseScreen(){ // all pausing stuff here
