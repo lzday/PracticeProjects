@@ -89,6 +89,21 @@ public class UI {
 
         // MENU
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+
+        text = "NEW GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*3.5;
+        g2.drawString(text, x, y);
+
+        text = "LOAD GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+
+        text = "QUIT";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
     }
 
     public void drawPauseScreen(){ // all pausing stuff here
