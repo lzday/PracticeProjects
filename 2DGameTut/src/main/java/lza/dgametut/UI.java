@@ -65,11 +65,20 @@ public class UI {
     }
 
     public void drawTitleScreen(){
+        /* if changing background color:
+         * g2.setColor(new Color(70, 120, 80));
+         * g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight); */
+
         // TITLE NAME
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
         String text = "Blue Boy Adventure";
         int x = getXforCenteredText(text);
         int y = gp.tileSize*3;
+
+        // SHADOW COLOR
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+        // MAIN COLOR
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
     }
@@ -112,7 +121,7 @@ public class UI {
         g2.drawRoundRect(x + 5, y+ 5, width-10, height-10, 25, 25);
     }
 
-    public int getXforCenteredText(String text){
+    int getXforCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth/2 - length/2;
     }
