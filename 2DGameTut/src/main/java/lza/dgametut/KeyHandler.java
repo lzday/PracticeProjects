@@ -32,6 +32,18 @@ public class KeyHandler implements KeyListener{
                 if(gp.ui.commandNum > 2)
                     gp.ui.commandNum = 0;
             }
+            if(code == KeyEvent.VK_ENTER){
+                if(gp.ui.commandNum == 0){
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+                }
+                if(gp.ui.commandNum == 1){
+                    // implmenet
+                }
+                if(gp.ui.commandNum == 2){
+                    System.exit(0);
+                }
+            }
         }
         // PLAY STATE
         if(gp.gameState == gp.playState) {
