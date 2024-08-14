@@ -32,9 +32,9 @@ public class EventHandler {
 
     public void checkEvent(){
         if(hit(27, 16, "right") == true)
-            damagePit(gp.dialogueState);
+            damagePit(27, 16, gp.dialogueState);
         if(hit(23, 12, "up"))
-            healingPool(gp.dialogueState);
+            healingPool(23, 12, gp.dialogueState);
 
     }
 
@@ -47,7 +47,7 @@ public class EventHandler {
         eventRect[col][row].x = col*gp.tileSize + eventRect[col][row].x;
         eventRect[col][row].y = row*gp.tileSize + eventRect[col][row].y;
 
-        if(gp.player.solidArea.intersects(eventRect[col][row])){
+        if(gp.player.solidArea.intersects(eventRect[col][row]) && !eventRect[col][row].eventDone){ // event is one-time
             if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any"))
                 hit = true; // check collision from a specified direction
         }
@@ -61,14 +61,15 @@ public class EventHandler {
         return hit;
     }
 
-    public void damagePit(int gameState){
+    public void damagePit(int col, int row, int gameState){
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit!";
         gp.player.life -= 1;
+        eventRect[col][row].eventDone;
     }
 
     public void healingPool(int gameState){
-        if(gp.keyH.enterPressed == true){
+        if(gp.keyH.enterPressed){
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You drink the water. \nYou life has been recovered.";
             gp.player.life = gp.player.maxLife;
