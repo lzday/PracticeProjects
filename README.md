@@ -3,7 +3,7 @@ A collection of all the project tutorials that I followed to help me learn how t
 
 ## 2DGameTut
 A 2D action RPG built in Java following this [youtube video series](https://youtube.com/playlist?list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&si=JTNF5EKiDB5Tjv-a).  
-Completion progress: 13/57
+Completion progress: 19/57
 
 ## DocsClone
 A Google Docs clone following this [youtube tutorial](https://youtu.be/iRaelG7v0OU?si=G-CJyg9qkpP8oj_5), using React, Socket.io, and MongoDB. 
