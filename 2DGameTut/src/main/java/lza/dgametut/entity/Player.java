@@ -82,6 +82,9 @@ public class Player extends Entity{
                 // CHECK NPC COLLISION
                 int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
                 interactNPC(npcIndex);
+
+                // CHECK EVENT
+                gp.eHandler.checkEvent();
             } else {
                 standCounter++;
                 if (standCounter == 20)

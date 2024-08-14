@@ -21,7 +21,7 @@ public class EventHandler {
     }
 
     public void checkEvent(){
-        if(hit(27, 16, "right"))
+        if(hit(27, 16, "right") == true)
             damagePit(gp.dialogueState);
 
     }
@@ -37,9 +37,10 @@ public class EventHandler {
 
         if(gp.player.solidArea.intersects(eventRect)){
             if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any"))
-                hit = true;
+                hit = true; // check collision from a specified direction
         }
 
+        // reset solidArea after collision
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;
         gp.player.solidArea.y = gp.player.solidAreaDefaultY;
         eventRect.x = eventRectDefaultX;

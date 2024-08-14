@@ -82,7 +82,7 @@ public class UI {
         int x = gp.tileSize/2;
         int y = gp.tileSize/2;
         int i = 0;
-        gp.player.life = 3; // for testing
+        //gp.player.life = 3; // for testing
 
         // DRAW MAX LIFE
         while(i<gp.player.maxLife/2){
