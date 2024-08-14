@@ -65,14 +65,15 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit!";
         gp.player.life -= 1;
-        eventRect[col][row].eventDone;
+        eventRect[col][row].eventDone = true;
     }
 
-    public void healingPool(int gameState){
+    public void healingPool(int col, int row, int gameState){
         if(gp.keyH.enterPressed){
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You drink the water. \nYou life has been recovered.";
             gp.player.life = gp.player.maxLife;
+            eventRect[col][row].eventDone = true;
         }
     }
 }
