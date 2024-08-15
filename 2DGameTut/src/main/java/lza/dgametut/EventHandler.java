@@ -4,7 +4,9 @@ import java.awt.*;
 
 public class EventHandler {
     GamePanel gp;
-    EventRect eventRect[][];
+    EventRect[][] eventRect;
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
@@ -31,11 +33,22 @@ public class EventHandler {
     }
 
     public void checkEvent(){
-        if(hit(27, 16, "right") == true)
-            damagePit(27, 16, gp.dialogueState);
-        if(hit(23, 12, "up"))
-            healingPool(23, 12, gp.dialogueState);
+        // Check if the player is more than 1 tile away from the last event
+        int xDistance = Math.abs(gp.player.worldX - previousEventX);
+        int yDistance = Math.abs(gp.player.worldY - previousEventY);
+        int distance = Math.max(xDistance, yDistance);
+        if(distance > gp.tileSize){
+            canTouchEvent = true; // can trigger event again
+        }
 
+        if(canTouchEvent) {
+            if (hit(27, 16, "right") == true)
+                damagePit(27, 16, gp.dialogueState);
+            if(hit(23, 19, "any") == true)
+                damagePit(27, 16, gp.dialogueState);
+            if (hit(23, 12, "up"))
+                healingPool(23, 12, gp.dialogueState);
+        }
     }
 
     public boolean hit(int col, int row, String reqDirection){
@@ -47,9 +60,14 @@ public class EventHandler {
         eventRect[col][row].x = col*gp.tileSize + eventRect[col][row].x;
         eventRect[col][row].y = row*gp.tileSize + eventRect[col][row].y;
 
-        if(gp.player.solidArea.intersects(eventRect[col][row]) && !eventRect[col][row].eventDone){ // event is one-time
-            if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any"))
+        if(gp.player.solidArea.intersects(eventRect[col][row]) && !eventRect[col][row].eventDone) { // event is one-time
+            if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")){
                 hit = true; // check collision from a specified direction
+
+                // record location of previous event
+                previousEventX = gp.player.worldX;
+                previousEventY = gp.player.worldY;
+            }
         }
 
         // reset solidArea after collision
@@ -65,7 +83,12 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit!";
         gp.player.life -= 1;
-        eventRect[col][row].eventDone = true;
+
+        // for one-time event
+        // eventRect[col][row].eventDone = true;
+
+        // for multiple events but not in a row
+        canTouchEvent = false;
     }
 
     public void healingPool(int col, int row, int gameState){
@@ -73,7 +96,6 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You drink the water. \nYou life has been recovered.";
             gp.player.life = gp.player.maxLife;
-            eventRect[col][row].eventDone = true;
         }
     }
 }
